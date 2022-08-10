@@ -1,15 +1,14 @@
 import datetime
-from email import message
 import pytz
 import glob, os
 
-class Log:
+class LogClass:
     """A class to log messages in file and console"""
 
-    def __defaultLogFileName__() -> str:
+    def __defaultLogFileName__(self = 0) -> str:
         return "latest.log"
 
-    def __defaultLogFolderPath__() -> str:
+    def __defaultLogFolderPath__(self = 0) -> str:
         return "logs/"
 
     def getLogFolderPath(self) -> str:
@@ -35,6 +34,8 @@ class Log:
             self.__logFileName__ = new
 
     def __init__(self, showInConsole:bool = False, logFileName:str = __defaultLogFileName__(), logFolderPath:str = __defaultLogFolderPath__()) -> None:
+        if (logFolderPath != "" and logFolderPath[-1] != '/'):
+            logFolderPath += '/'
         self.__showInConsole__ = showInConsole
         self.__logFileName__ = logFileName
         self.__logFolderPath__ = logFolderPath
@@ -43,7 +44,6 @@ class Log:
         return os.path.exists(path)
 
     def log(self, message:str, showInconsole:bool = False) -> None:
-
         currentTimeZone = pytz.timezone('Europe/Paris')
         log_date = datetime.datetime.now(tz=currentTimeZone).strftime("%Y-%m-%d %H:%M:%S\t")
 
@@ -70,8 +70,14 @@ class Log:
         for f in glob.glob(self.getLogFolderPath() + "*.log"):
             os.remove(f)
 
+def log(message:str, showInConsole:bool = False, logFileName: str = "", logFolderPath: str = "") -> None:
+    logObj = LogClass(showInConsole, logFileName, logFolderPath)
+    logObj.log(message)
+
+def resetLogFile(logFileName: str = "", logFolderPath: str = ""):
+    logObj = LogClass(logFileName=logFileName, logFolderPath=logFolderPath)
+    logObj.resetLogFile()
+
 if __name__ == "__main__":
-    log = Log()
-    log.resetLogFile()
-    for i in range(5):
-        log.log("oui")
+    resetLogFile()
+    log("test")

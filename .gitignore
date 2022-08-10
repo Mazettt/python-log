@@ -1,2 +1,6 @@
 logs/
 *.log
+test*
+__pycache__
+
+log-withProperty.py
