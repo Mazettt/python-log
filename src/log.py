@@ -38,6 +38,12 @@ class LogClass:
         if (new != ""):
             self.__logFileName__ = new
 
+    def getShowInConsole(self) -> bool:
+        return self.__showInConsole__
+
+    def setShowInConsole(self, new:bool) -> None:
+        self.__showInConsole__ = new
+
     def __init__(self, showInConsole:bool = False, logFileName:str = __defaultLogFileName__(), logFolderPath:str = __defaultLogFolderPath__()) -> None:
         if (logFolderPath != "" and logFolderPath[-1] != '/'):
             logFolderPath += '/'
