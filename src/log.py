@@ -62,6 +62,19 @@ class LogClass:
         if self.__showInConsole__:
             LogSpecialMessages.printColor(log_message, color)
 
+    def info(self, message:str):
+        self.log(message, 'info', bcolors.BOLD_BLUE)
+    def debug(self, message:str):
+        self.log(message, 'debug', bcolors.BOLD_BLACK)
+    def success(self, message:str):
+        self.log(message, 'success', bcolors.BOLD_GREEN)
+    def warning(self, message:str):
+        self.log(message, 'warn', bcolors.BOLD_YELLOW)
+    def error(self, message:str):
+        self.log(message, 'error', bcolors.BOLD_RED)
+    def critical(self, message:str):
+        self.log(message, 'crit', bcolors.BOLD_PURPLE)
+
     def __getLogCreatedDate__(self, path:str) -> str:
         with open(path, 'r') as f:
             firstLine = f.read().split('\n')[0]
@@ -85,30 +98,24 @@ def resetLogFile(logFileName: str = "", logFolderPath: str = "") -> None:
 def log(message:str, showInConsole:bool = False, logFileName: str = "", logFolderPath: str = "") -> None:
     logObj = LogClass(showInConsole, logFileName, logFolderPath)
     logObj.log(message, 'log')
-
 def info(message:str, logFileName: str = "", logFolderPath: str = "") -> None:
     logObj = LogClass(True, logFileName, logFolderPath)
-    logObj.log(message, 'info', bcolors.BOLD_BLUE)
-
+    logObj.info(message)
 def debug(message:str, logFileName: str = "", logFolderPath: str = "") -> None:
     logObj = LogClass(True, logFileName, logFolderPath)
-    logObj.log(message, 'debug', bcolors.BOLD_BLACK)
-
+    logObj.debug(message)
 def success(message:str, logFileName: str = "", logFolderPath: str = "") -> None:
     logObj = LogClass(True, logFileName, logFolderPath)
-    logObj.log(message, 'success', bcolors.BOLD_GREEN)
-
+    logObj.success(message)
 def warning(message:str, logFileName: str = "", logFolderPath: str = "") -> None:
     logObj = LogClass(True, logFileName, logFolderPath)
-    logObj.log(message, 'warn', bcolors.BOLD_YELLOW)
-
+    logObj.warning(message)
 def error(message:str, logFileName: str = "", logFolderPath: str = "") -> None:
     logObj = LogClass(True, logFileName, logFolderPath)
-    logObj.log(message, 'error', bcolors.BOLD_RED)
-
+    logObj.error(message)
 def critical(message:str, logFileName: str = "", logFolderPath: str = "") -> None:
     logObj = LogClass(True, logFileName, logFolderPath)
-    logObj.log(message, 'crit', bcolors.BOLD_PURPLE)
+    logObj.critical(message)
 
 if __name__ == "__main__":
     resetLogFile()
