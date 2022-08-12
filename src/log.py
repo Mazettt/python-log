@@ -65,7 +65,7 @@ class LogClass:
     def __getLogCreatedDate__(self, path:str) -> str:
         with open(path, 'r') as f:
             firstLine = f.read().split('\n')[0]
-            date = firstLine.split('\t')[0]
+            date = firstLine.split(' ')[0] + firstLine.split(' ')[1]
         return date
 
     def resetLogFile(self) -> None:
