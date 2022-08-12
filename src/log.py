@@ -2,6 +2,11 @@ import datetime
 import pytz
 import glob, os
 
+if __name__ == "__main__":
+    from colors import bcolors, LogSpecialMessages
+else:
+    from .colors import bcolors, LogSpecialMessages
+
 class LogClass:
     """A class to log messages in file and console"""
 
@@ -43,16 +48,19 @@ class LogClass:
     def __fileExists__(self, path:str) -> bool:
         return os.path.exists(path)
 
-    def log(self, message:str, showInconsole:bool = False) -> None:
+    def log(self, message:str, log_type:str, color:str = bcolors.RESET) -> None:
         currentTimeZone = pytz.timezone('Europe/Paris')
-        log_date = datetime.datetime.now(tz=currentTimeZone).strftime("%Y-%m-%d %H:%M:%S\t")
+        log_date = datetime.datetime.now(tz=currentTimeZone).strftime("%Y-%m-%d %H:%M:%S")
+
+        log_type = f'[{log_type.upper()}]'
+        log_message = f'{log_date:21}{log_type:11}{message}'
 
         if not (self.__fileExists__(self.getLogFolderPath())):
             os.mkdir(self.getLogFolderPath())
         with open(self.getLogFileName(), "a") as f:
-            f.write(log_date + message + '\n')
-        if self.__showInConsole__ or showInconsole:
-            print(log_date + message)
+            f.write(f'{log_message}\n')
+        if self.__showInConsole__:
+            LogSpecialMessages.printColor(log_message, color)
 
     def __getLogCreatedDate__(self, path:str) -> str:
         with open(path, 'r') as f:
@@ -70,14 +78,44 @@ class LogClass:
         for f in glob.glob(self.getLogFolderPath() + "*.log"):
             os.remove(f)
 
-def log(message:str, showInConsole:bool = False, logFileName: str = "", logFolderPath: str = "") -> None:
-    logObj = LogClass(showInConsole, logFileName, logFolderPath)
-    logObj.log(message)
-
-def resetLogFile(logFileName: str = "", logFolderPath: str = ""):
+def resetLogFile(logFileName: str = "", logFolderPath: str = "") -> None:
     logObj = LogClass(logFileName=logFileName, logFolderPath=logFolderPath)
     logObj.resetLogFile()
 
+def log(message:str, showInConsole:bool = False, logFileName: str = "", logFolderPath: str = "") -> None:
+    logObj = LogClass(showInConsole, logFileName, logFolderPath)
+    logObj.log(message, 'log')
+
+def info(message:str, logFileName: str = "", logFolderPath: str = "") -> None:
+    logObj = LogClass(True, logFileName, logFolderPath)
+    logObj.log(message, 'info', bcolors.BOLD_BLUE)
+
+def debug(message:str, logFileName: str = "", logFolderPath: str = "") -> None:
+    logObj = LogClass(True, logFileName, logFolderPath)
+    logObj.log(message, 'debug', bcolors.BOLD_BLACK)
+
+def success(message:str, logFileName: str = "", logFolderPath: str = "") -> None:
+    logObj = LogClass(True, logFileName, logFolderPath)
+    logObj.log(message, 'success', bcolors.BOLD_GREEN)
+
+def warning(message:str, logFileName: str = "", logFolderPath: str = "") -> None:
+    logObj = LogClass(True, logFileName, logFolderPath)
+    logObj.log(message, 'warn', bcolors.BOLD_YELLOW)
+
+def error(message:str, logFileName: str = "", logFolderPath: str = "") -> None:
+    logObj = LogClass(True, logFileName, logFolderPath)
+    logObj.log(message, 'error', bcolors.BOLD_RED)
+
+def critical(message:str, logFileName: str = "", logFolderPath: str = "") -> None:
+    logObj = LogClass(True, logFileName, logFolderPath)
+    logObj.log(message, 'crit', bcolors.BOLD_PURPLE)
+
 if __name__ == "__main__":
     resetLogFile()
-    log("test")
+    log("log")
+    info("info")
+    debug("debug")
+    success("success")
+    warning("warn")
+    error("error")
+    critical("crit")
