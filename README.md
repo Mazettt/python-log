@@ -12,7 +12,7 @@ A python module to log some messages easily into a file and in the console with 
 
 ```sh
 cd root_of_your_project
-git clone https://github.com/Mazettt/python-log.git log
+git submodule add https://github.com/Mazettt/python-log.git log
 pip install -r log/requirements.txt
 ```
 
