@@ -104,23 +104,23 @@ def resetLogFile(logFileName: str = "", logFolderPath: str = "") -> None:
 def log(message:str, showInConsole:bool = False, logFileName: str = "", logFolderPath: str = "") -> None:
     logObj = LogClass(showInConsole, logFileName, logFolderPath)
     logObj.log(message, 'log')
-def info(message:str, logFileName: str = "", logFolderPath: str = "") -> None:
-    logObj = LogClass(True, logFileName, logFolderPath)
+def info(message:str, showInConsole:bool = True, logFileName: str = "", logFolderPath: str = "") -> None:
+    logObj = LogClass(showInConsole, logFileName, logFolderPath)
     logObj.info(message)
-def debug(message:str, logFileName: str = "", logFolderPath: str = "") -> None:
-    logObj = LogClass(True, logFileName, logFolderPath)
+def debug(message:str, showInConsole:bool = True, logFileName: str = "", logFolderPath: str = "") -> None:
+    logObj = LogClass(showInConsole, logFileName, logFolderPath)
     logObj.debug(message)
-def success(message:str, logFileName: str = "", logFolderPath: str = "") -> None:
-    logObj = LogClass(True, logFileName, logFolderPath)
+def success(message:str, showInConsole:bool = True, logFileName: str = "", logFolderPath: str = "") -> None:
+    logObj = LogClass(showInConsole, logFileName, logFolderPath)
     logObj.success(message)
-def warning(message:str, logFileName: str = "", logFolderPath: str = "") -> None:
-    logObj = LogClass(True, logFileName, logFolderPath)
+def warning(message:str, showInConsole:bool = True, logFileName: str = "", logFolderPath: str = "") -> None:
+    logObj = LogClass(showInConsole, logFileName, logFolderPath)
     logObj.warning(message)
-def error(message:str, logFileName: str = "", logFolderPath: str = "") -> None:
-    logObj = LogClass(True, logFileName, logFolderPath)
+def error(message:str, showInConsole:bool = True, logFileName: str = "", logFolderPath: str = "") -> None:
+    logObj = LogClass(showInConsole, logFileName, logFolderPath)
     logObj.error(message)
-def critical(message:str, logFileName: str = "", logFolderPath: str = "") -> None:
-    logObj = LogClass(True, logFileName, logFolderPath)
+def critical(message:str, showInConsole:bool = True, logFileName: str = "", logFolderPath: str = "") -> None:
+    logObj = LogClass(showInConsole, logFileName, logFolderPath)
     logObj.critical(message)
 
 if __name__ == "__main__":
