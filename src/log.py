@@ -1,3 +1,4 @@
+from tzlocal import get_localzone
 import datetime
 import pytz
 import glob, os
@@ -55,7 +56,7 @@ class LogClass:
         return os.path.exists(path)
 
     def log(self, message:str, log_type:str, color:str = bcolors.RESET) -> None:
-        currentTimeZone = pytz.timezone('Europe/Paris')
+        currentTimeZone = pytz.timezone(str(get_localzone()))
         log_date = datetime.datetime.now(tz=currentTimeZone).strftime("%Y-%m-%d %H:%M:%S")
 
         log_type = f'[{log_type.upper()}]'
